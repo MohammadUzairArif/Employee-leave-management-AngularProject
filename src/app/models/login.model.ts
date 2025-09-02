@@ -1,9 +1,26 @@
 export class LoginModel {
-    emailId: string;
-    password: string;
+    emailId: string = "";
+    password: string = "";
 
-    constructor(){
-        this.emailId = "",
-        this.password = ""
-    }
+    // constructor(){
+    //     this.emailId = "",
+    //     this.password = ""
+    // }
+}
+
+export interface APIResponseModel{
+    message: string;
+    result: boolean;
+    data: any
+}
+
+export interface EmployeeList{
+    "employeeId":number,
+    "employeeName":string,
+    "deptId":string,
+    "deptName":string,
+    "contactNo":string,
+    "emailId":string,
+    "role":string
+
 }

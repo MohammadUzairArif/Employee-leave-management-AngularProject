@@ -1,1 +1,57 @@
-<p>employee works!</p>
+<div class="p-6">
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold">Employee Management</h1>
+    <button class="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">
+      Add Employee
+    </button>
+  </div>
+
+  <!-- Employee List -->
+  <div class="bg-white rounded-lg shadow p-4">
+    <h2 class="text-lg font-semibold mb-4 text-blue-600">Employee List</h2>
+
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse">
+        <!-- Table Head -->
+        <thead>
+          <tr class="bg-gray-800 text-white text-left">
+            <th class="py-2 px-4">ID</th>
+            <th class="py-2 px-4">Name</th>
+            <th class="py-2 px-4">Email</th>
+            <th class="py-2 px-4">Contact</th>
+            <th class="py-2 px-4">Department</th>
+            <th class="py-2 px-4">Actions</th>
+          </tr>
+        </thead>
+
+        <!-- Table Body -->
+        <tbody>
+          @for (item of employeeList; track $index) {
+          <tr class="border-b hover:bg-gray-50">
+            <td class="py-2 px-4">{{$index + 1}}</td>
+            <td class="py-2 px-4">{{item.employeeName}}</td>
+            <td class="py-2 px-4">{{item.emailId}}</td>
+            <td class="py-2 px-4">{{item.contactNo}}</td>
+            <td class="py-2 px-4">{{item.deptId}}</td>
+            <!-- <td class="py-2 px-4">{{}}</td>
+            <td class="py-2 px-4">{{}}</td> -->
+           <td class="py-2 px-4 flex gap-x-2">
+  <button class="px-3 py-1 bg-yellow-400 text-white text-sm rounded hover:bg-yellow-500">
+    Edit
+  </button>
+  <button class="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600">
+    Delete
+  </button>
+</td>
+
+          </tr>
+          }
+
+
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

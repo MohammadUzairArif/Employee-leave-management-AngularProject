@@ -14,6 +14,9 @@ import { LoginModel } from '../../models/login.model';
   styleUrl: './login.css'
 })
 export class Login {
+  employeeService = inject(EmployeeService)
+  router = inject(Router)
+  
   loginData: LoginModel = new LoginModel()
 
   loginForm: FormGroup = new FormGroup({
@@ -22,11 +25,10 @@ export class Login {
   })
 
 
-  employeeService = inject(EmployeeService)
-  router = inject(Router)
+  
   onLogin() {
     console.log(this.loginForm.value);
-    this.employeeService.onLogin(this.loginForm).subscribe({
+    this.employeeService.onLogin(this.loginForm.value).subscribe({
       next: (response: any) => {
         if(response.result){
           alert("Login Successfully")
