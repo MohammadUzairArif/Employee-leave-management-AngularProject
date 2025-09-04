@@ -24,3 +24,25 @@ export interface EmployeeList{
     "role":string
 
 }
+export class EmployeeModel{
+    employeeId: number 
+    employeeName: string  
+    contactNo:string
+    emailId:string
+     deptId:string  
+    password: string
+    gender:string
+     role:string
+
+     constructor(){
+        this.employeeId = 0,
+        this.employeeName = ""
+        this.contactNo=""
+        this.emailId = ""
+        this.deptId = ""
+        this.password = ""
+        this.gender = ""
+        this.role = ""
+
+     }
+}

@@ -22,4 +22,12 @@ export class EmployeeService {
       map((res:any)=>res.data)
     )
   }
+   getRoles(){
+    return this.http.get("https://freeapi.miniprojectideas.com/api/EmployeeLeave/GetAllRoles").pipe(
+      map((res:any)=>res.data)
+    )
+  }
+   onSaveNewEmployee(obj: any) {
+    return this.http.post("https://freeapi.miniprojectideas.com/api/EmployeeLeave/CreateEmployee", obj);
+  }
 }
