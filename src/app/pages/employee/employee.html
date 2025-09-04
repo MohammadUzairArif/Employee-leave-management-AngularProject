@@ -2,7 +2,8 @@
   <!-- Header -->
   <div class="flex justify-between items-center mb-6">
     <h1 class="text-2xl font-bold">Employee Management</h1>
-    <button class="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">
+    <button (click)="openModal()"
+      class="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">
       Add Employee
     </button>
   </div>
@@ -36,14 +37,14 @@
             <td class="py-2 px-4">{{item.deptId}}</td>
             <!-- <td class="py-2 px-4">{{}}</td>
             <td class="py-2 px-4">{{}}</td> -->
-           <td class="py-2 px-4 flex gap-x-2">
-  <button class="px-3 py-1 bg-yellow-400 text-white text-sm rounded hover:bg-yellow-500">
-    Edit
-  </button>
-  <button class="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600">
-    Delete
-  </button>
-</td>
+            <td class="py-2 px-4 flex gap-x-2">
+              <button class="px-3 py-1 bg-yellow-400 text-white text-sm rounded hover:bg-yellow-500">
+                Edit
+              </button>
+              <button class="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600">
+                Delete
+              </button>
+            </td>
 
           </tr>
           }
@@ -55,3 +56,85 @@
     </div>
   </div>
 </div>
+
+<!-- Modal -->
+@if (isModalOpen) {
+<div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <div class="bg-white w-2/3 rounded-lg shadow-lg p-6 relative">
+    <!-- Close Button -->
+    <button (click)="closeModal()" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
+      ✖
+    </button>
+
+    <h2 class="text-xl font-bold mb-4">Add Employee</h2>
+
+    <form>
+      <div class="grid grid-cols-2 gap-4">
+        <!-- Employee Name -->
+        <div>
+          <label class="block text-sm font-medium">Employee Name</label>
+          <input type="text" class="w-full border rounded px-3 py-2 mt-1" />
+        </div>
+
+        <!-- Contact Number -->
+        <div>
+          <label class="block text-sm font-medium">Contact Number</label>
+          <input type="text" class="w-full border rounded px-3 py-2 mt-1" />
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label class="block text-sm font-medium">Email ID</label>
+          <input type="email" class="w-full border rounded px-3 py-2 mt-1" />
+        </div>
+
+        <!-- Department -->
+        <div>
+          <label class="block text-sm font-medium">Department</label>
+          <select class="w-full border rounded px-3 py-2 mt-1">
+            <option>Select Department</option>
+            @for (item of deptList$|async; track $index) {
+            <option [value]="item.deptId">{{item.deptName}}</option>
+
+            }
+
+          </select>
+        </div>
+
+        <!-- Password -->
+        <div>
+          <label class="block text-sm font-medium">Password</label>
+          <input type="password" class="w-full border rounded px-3 py-2 mt-1" />
+        </div>
+
+        <!-- Gender -->
+        <div>
+          <label class="block text-sm font-medium">Gender</label>
+          <select class="w-full border rounded px-3 py-2 mt-1">
+            <option>Select Gender</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Role (full width) -->
+      <div class="mt-4">
+        <label class="block text-sm font-medium">Role</label>
+        <input type="text" class="w-full border rounded px-3 py-2 mt-1" />
+      </div>
+
+      <!-- Footer -->
+      <div class="flex justify-end gap-2 mt-6">
+        <button type="button" (click)="closeModal()" class="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500">
+          Cancel
+        </button>
+        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+          Add Employee
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+}
