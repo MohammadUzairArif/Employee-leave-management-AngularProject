@@ -1,111 +1,148 @@
 <div class="p-6">
-  <h2 class="text-2xl font-semibold mb-4">Leave Management</h2>
+  <!-- Heading -->
+  <h2 class="text-2xl font-semibold mb-6">Leave Management</h2>
 
   <!-- Tabs -->
-  <div class="flex space-x-4 border-b mb-6">
-    <button class="px-4 py-2 border-b-2 border-blue-600 text-blue-600 font-medium">
-      All Leaves
+  <div class="flex space-x-6 border-b mb-6">
+    <button 
+      (click)="changeTab('myLeave')" 
+      [class.border-b-2]="activeTab === 'myLeave'"
+      [class.border-blue-600]="activeTab === 'myLeave'"
+      [class.text-blue-600]="activeTab === 'myLeave'"
+      class="px-4 py-2 font-medium transition-colors">
+      My Leaves
     </button>
-    <button class="px-4 py-2 text-gray-600 hover:text-blue-600">
-      Pending Approval
-    </button>
-    <button class="px-4 py-2 text-gray-600 hover:text-blue-600">
-      Approved
+
+    <button 
+      (click)="changeTab('leaveRequest')" 
+      [class.border-b-2]="activeTab === 'leaveRequest'"
+      [class.border-blue-600]="activeTab === 'leaveRequest'"
+      [class.text-blue-600]="activeTab === 'leaveRequest'"
+      class="px-4 py-2 font-medium transition-colors">
+      Leave Request
     </button>
   </div>
 
-  <!-- Add Leave Request Button -->
-  <div class="flex justify-end mb-4">
-    <button (click)="openModal()"
-      class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md shadow"
-    >
-      Add Leave Request
-    </button>
-  </div>
+  <!-- My Leaves Tab -->
+  @if (activeTab === 'myLeave') {
+    <!-- Add Leave Request Button -->
+    <div class="flex justify-end mb-4">
+      <button 
+        (click)="openModal()" 
+        class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg shadow-md transition">
+        + Add Leave Request
+      </button>
+    </div>
 
-  <!-- Table -->
-  <div class="bg-white shadow-md rounded-lg overflow-hidden">
-    <table class="w-full border-collapse">
-      <thead class="bg-gray-100">
-        <tr>
-          <th class="px-4 py-3 text-left font-medium text-gray-700">Leave ID</th>
-          <th class="px-4 py-3 text-left font-medium text-gray-700">Employee</th>
-          <th class="px-4 py-3 text-left font-medium text-gray-700">Leave Type</th>
-          <th class="px-4 py-3 text-left font-medium text-gray-700">From Date</th>
-          <th class="px-4 py-3 text-left font-medium text-gray-700">To Date</th>
-          <th class="px-4 py-3 text-left font-medium text-gray-700">Days</th>
-          <th class="px-4 py-3 text-left font-medium text-gray-700">Status</th>
-          <th class="px-4 py-3 text-left font-medium text-gray-700">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (item of leaveList; track $index) {
-<!-- Row 1 -->
-        <tr class="border-t">
-          <td class="px-4 py-3">{{$index+1}}</td>
-          <td class="px-4 py-3">{{item.employeeName}}</td>
-          <td class="px-4 py-3">{{item.leaveType}}</td>
-          <td class="px-4 py-3">{{item.fromDate|date:"dd-MMM-yy"}}</td>
-          <td class="px-4 py-3">{{item.toDate|date:"dd-MMM-yyyy"}}</td>
-          <td class="px-4 py-3">2</td>
-          <td class="px-4 py-3">
-            @if (item.isApproved == null) {
-                <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm">
-              Pending
-            </span>
-            } @else if (item.isApproved == true) {
-                
-                <span class="bg-yellow-100 text-green-700 px-3 py-1 rounded-full text-sm">
-              Approved
-            </span>
-            }@else if (item.isApproved == false) {
-                
-                <span class="bg-yellow-100 text-red-700 px-3 py-1 rounded-full text-sm">
-              Reject
-            </span>
-            }
-            
-            
-            
-          </td>
-          <td class="px-4 py-3 space-x-2">
-            <button class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded">
-              Edit
-            </button>
-            <button class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded">
-              Delete
-            </button>
-          </td>
-        </tr>
-        }
-        
+    <!-- Leaves Table -->
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+      <table class="w-full border-collapse">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="px-4 py-3 text-left">#</th>
+            <th class="px-4 py-3 text-left">Employee</th>
+            <th class="px-4 py-3 text-left">Leave Type</th>
+            <th class="px-4 py-3 text-left">From Date</th>
+            <th class="px-4 py-3 text-left">To Date</th>
+            <th class="px-4 py-3 text-left">Days</th>
+            <th class="px-4 py-3 text-left">Status</th>
+            <th class="px-4 py-3 text-left">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of leaveList; track $index) {
+          <tr class="border-t hover:bg-gray-50">
+            <td class="px-4 py-3">{{$index+1}}</td>
+            <td class="px-4 py-3">{{item.employeeName}}</td>
+            <td class="px-4 py-3">{{item.leaveType}}</td>
+            <td class="px-4 py-3">{{item.fromDate | date:'dd-MMM-yyyy'}}</td>
+            <td class="px-4 py-3">{{item.toDate | date:'dd-MMM-yyyy'}}</td>
+            <td class="px-4 py-3">{{item.noOfDays}}</td>
+            <td class="px-4 py-3">
+              @if (item.isApproved == null) {
+                <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm">Pending</span>
+              } 
+              @else if (item.isApproved == true) {
+                <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">Approved</span>
+              } 
+              @else if (item.isApproved == false) {
+                <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm">Rejected</span>
+              }
+            </td>
+            <td class="px-4 py-3 space-x-2">
+              <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">Edit</button>
+              <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">Delete</button>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
 
-        
-      </tbody>
-    </table>
-  </div>
+  <!-- Leave Request Tab -->
+  @if (activeTab === 'leaveRequest') {
+    <h3 class="text-lg font-semibold text-yellow-600 mb-4">Pending Approval</h3>
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+      <table class="w-full border-collapse">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="px-4 py-3 text-left">#</th>
+            <th class="px-4 py-3 text-left">Employee</th>
+            <th class="px-4 py-3 text-left">Leave Type</th>
+            <th class="px-4 py-3 text-left">From Date</th>
+            <th class="px-4 py-3 text-left">To Date</th>
+            <th class="px-4 py-3 text-left">Days</th>
+            <th class="px-4 py-3 text-left">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of approvalleaveList; track $index) {
+          <tr class="border-t hover:bg-gray-50">
+            <td class="px-4 py-3">{{$index+1}}</td>
+            <td class="px-4 py-3">{{item.employeeName}}</td>
+            <td class="px-4 py-3">{{item.leaveType}}</td>
+            <td class="px-4 py-3">{{item.fromDate | date:'dd-MMM-yyyy'}}</td>
+            <td class="px-4 py-3">{{item.toDate | date:'dd-MMM-yyyy'}}</td>
+            <td class="px-4 py-3">{{item.noOfDays}}</td>
+            <td class="px-4 py-3 space-x-2">
+              <button (click)="approveRequest(item.leaveId)" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">Approve</button>
+              <button (click)="rejectRequest(item.leaveId)" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">Reject</button>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
 </div>
+
+<!-- Modal for Add Leave Request -->
 @if (isModalOpen) {
 <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
   <div class="bg-white w-2/3 rounded-lg shadow-lg p-6 relative">
     <!-- Close Button -->
-    <button (click)="closeModal()" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
-      ✖
-    </button>
+    <button (click)="closeModal()" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">✖</button>
 
     <h2 class="text-xl font-bold mb-4">Add Leave Request</h2>
 
-    <form [formGroup]="leaveForm">
+    <form [formGroup]="leaveForm" (ngSubmit)="onSave()">
       <div class="grid grid-cols-2 gap-4">
         <!-- Leave Type -->
         <div>
           <label class="block text-sm font-medium">Leave Type</label>
           <select formControlName="leaveType" class="w-full border rounded px-3 py-2 mt-1">
             <option value="">Select Leave Type</option>
-            <option value="Sick Leave">Sick Leave</option>
-            <option value="Casual Leave">Casual Leave</option>
-            <option value="Annual Leave">Annual Leave</option>
+            <option value="Casual">Casual</option>
+            <option value="Sick">Sick</option>
+            <option value="Annual">Annual</option>
           </select>
+        </div>
+
+        <!-- Number of Days -->
+        <div>
+          <label class="block text-sm font-medium">Number of Days</label>
+          <input type="number" formControlName="noOfDays" class="w-full border rounded px-3 py-2 mt-1" />
         </div>
 
         <!-- From Date -->
@@ -120,17 +157,11 @@
           <input type="date" formControlName="toDate" class="w-full border rounded px-3 py-2 mt-1" />
         </div>
 
-        <!-- Number of Days -->
-        <div>
-          <label class="block text-sm font-medium">Number of Days</label>
-          <input type="number" formControlName="noOfDays" class="w-full border rounded px-3 py-2 mt-1" placeholder="Enter days" />
+        <!-- Description -->
+        <div class="col-span-2">
+          <label class="block text-sm font-medium">Description</label>
+          <textarea formControlName="details" rows="3" class="w-full border rounded px-3 py-2 mt-1"></textarea>
         </div>
-      </div>
-
-      <!-- Description (full width) -->
-      <div class="mt-4">
-        <label class="block text-sm font-medium">Description</label>
-        <textarea formControlName="details" rows="3" class="w-full border rounded px-3 py-2 mt-1" placeholder="Enter reason"></textarea>
       </div>
 
       <!-- Footer -->
@@ -138,7 +169,7 @@
         <button type="button" (click)="closeModal()" class="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500">
           Cancel
         </button>
-        <button type="button" (click)="onSave()" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
           Submit Request
         </button>
       </div>

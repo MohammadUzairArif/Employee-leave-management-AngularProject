@@ -22,6 +22,8 @@ export class Employee implements OnInit {
   deptList$: Observable<any[]> = new Observable<any[]>();
   roleList$: Observable<any[]> = new Observable<any[]>();
 
+  currentTabName: string = "myLeave"
+
   ngOnInit(): void {
     this.getEmployee();
     this.deptList$ = this.employeeService.getDepartments();
@@ -37,6 +39,9 @@ export class Employee implements OnInit {
     });
   }
 
+  changeTab(tabName: string){
+    this.currentTabName = tabName
+  }
   // Open modal
   openModal() {
     this.isModalOpen = true;
