@@ -49,15 +49,24 @@ export class Employee implements OnInit {
 
   onSaveEmployee() {
     this.employeeService.onSaveNewEmployee(this.employeeObj).subscribe({
-      next: (res: any) => {
-        if (res.result) {
-          this.getEmployee();
-          alert('Employee Created Successfully');
-        } else {
-          alert(res.message);
-        }
-      },
-      error: () => {},
-    });
+    next: (res:any) => {
+      if(res.result) {
+        console.log(res);
+        
+
+        this.getEmployee(); // Refresh the employee list
+         this.closeModal();
+        alert('Employee added successfully');
+      } else {
+        alert(res.message);
+      }
+     
+    
+     
+    },
+    error: (error) => {
+      // Handle error response
+    }
+  });
   }
 }
